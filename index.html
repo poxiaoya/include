@@ -1,0 +1,100 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>icloud</title>
+	<script src="js/angular.min.js"></script>
+	<link rel="stylesheet" href="less/index.less">
+	<link rel="stylesheet" href="css/index.css">
+
+
+
+	<script src="js/index.js"></script>
+</head>
+<body ng-controller="iclouds">
+	<div class="container">
+		<div class="left">
+			<div class="left-top">
+				<div class="left-logo"></div>
+				<span class="left-top-txsx">提醒事项</span>
+				<span class="left-top-jia" ng-click="addItem()">+</span>
+			</div>
+			<div class="left-title">
+				<div class="left-biaoti">
+					<div class="left-biaoti-nz"></div>
+					<span>已计划</span>
+				</div>
+				<ul class="left-xia" ng-repeat="v in todo"  ng-class="$index==index?'hot':''" ng-click="select($index)">
+					<li class="yanse" ng-style="{background:v.color}"></li>
+					<li class="zi">{{v.title}}</li>
+					<li class="wifi"></li>
+				</ul>
+
+			</div>
+			
+		</div>
+		<div class="right">
+			<div class="right-top">
+				<div class="right-top-ss" ng-click="search()"></div>
+				<input type="text" placeholder="搜索所有提示" class="right-top-kk" ng-model="ss">
+				<div class="help"></div>
+				<div class="shu">|</div>
+				<div class="xiao"></div>
+				<div class="name">高二虎</div>
+			</div>
+			<div class="right-title">
+				<div class="right-title-a" ng-style="{color:todo[index].color}">{{todo[index].title}}</div>
+				<div class="right-title-b" ng-style="{color:todo[index].color}" ng-click="optflag=!optflag">选项</div>
+				<div class="xuan-list" ng-show="optflag">
+					<div class="xuan-list-inner">
+						<input type="text" ng-model="changeTitle" ng-style="{color:changeColor}">
+						<div class="color-box">
+							<h6>列表颜色</h6>
+							<ul>
+								<li ng-repeat="v in colors" ng-style="{backgroundColor:v,borderColor:changeColor==v?v:'rgba(0,0,0,0)'}" ng-click="sColor(v)"></li>
+							</ul>
+
+						</div>
+						<div class="xuan-btn">
+							<a href="#" class="shanchu" ng-click="delList()">删除</a>
+							<div>
+								<a href="#" ng-click="optflag=false">取消</a>
+								<span>|</span>
+								<a href="#" class="wancheng" ng-click="comChange()">完成</a>
+							</div>
+						</div>
+					</div>
+					<div class="youjiantou"></div>
+				</div>
+			</div>
+			<div class="right-xia">
+				<div class="right-ywc">
+					<div class="dian" ng-click="flag=!flag" ng-class="{true:'xiajiantou',false:'dian'}[flag]"></div>
+					已完成：{{doneNums}}项
+					<div class="qinchu" ng-style="{color:todo[index].color}" ng-click="clearCom()">清除已完成事项</div>
+				</div>
+
+				<div class="over" ng-show="flag">
+					<ul>
+						<li ng-repeat="v in todo[index].list |filter:'true'">
+							<div class="yuanquan dinwei" ng-click="set(v,false)"ng-style="{borderColor:todo[index].color,backgroundColor:todo[index].color}"></div>
+							<div contenteditable ng-blur="change(v,$event)" class="wanc wancs">{{v.title}}</div>
+						</li>
+					</ul>
+				</div>
+				<div class="wei">
+					<ul>
+						<li ng-repeat="v in todo[index].list |filter:'false'">
+							<span ng-click="set(v,true)"ng-style="{borderColor:todo[index].color}" class="dinwei"></span>
+							<div class=" wanc ss" contenteditable ng-blur="change(v,$event)">{{v.title}}</div></li>
+					</ul>
+				</div>
+				<div class="new" ng-click="addlist()">
+					新项目...
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>
